@@ -1,0 +1,23 @@
+name: Daily Contribution
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Faire le commit quotidien
+        run: |
+          echo "- $(date '+%Y-%m-%d'): reviewed code and updated notes" >> notes.md
+          git config user.email "madouninass@icloud.com"
+          git config user.name "Madouni-Nassim"
+          git add notes.md
+          git commit -m "notes: $(date '+%Y-%m-%d')"
+          git push
